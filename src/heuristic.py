@@ -1,3 +1,4 @@
+import math
 from abc import ABC, abstractmethod
 
 from puzzle import Puzzle
@@ -5,25 +6,25 @@ from puzzle import Puzzle
 
 class Heuristic(ABC):
     @abstractmethod
-    def __call__(self, state: Puzzle, goal_list: list) -> int:
+    def __call__(self, state: Puzzle, goal_list: list) -> float:
         return -1
 
 
 class Euclide(Heuristic):
-    def __call__(self, state: Puzzle, goal_list: list) -> int:
+    def __call__(self, state: Puzzle, goal_list: list) -> float:
         tot = 0
         for row, values in enumerate(state.grid):
             for col, cell in enumerate(values):
                 if cell:
                     row_goal, col_goal = goal_list[cell]
-                    tot += (
+                    tot += math.sqrt(
                         (row_goal - row) ** 2 + (col_goal - col) ** 2
-                    ) ** 0.5
-        return tot
+                    )
+        return int(tot)
 
 
 class Manhattan(Heuristic):
-    def __call__(self, state: Puzzle, goal_list: list) -> int:
+    def __call__(self, state: Puzzle, goal_list: list) -> float:
         tot = 0
         for row, values in enumerate(state.grid):
             for col, cell in enumerate(values):
@@ -34,7 +35,7 @@ class Manhattan(Heuristic):
 
 
 class Misplaced(Heuristic):
-    def __call__(self, state: Puzzle, goal_list: list) -> int:
+    def __call__(self, state: Puzzle, goal_list: list) -> float:
         tot = 0
         for row, values in enumerate(state.grid):
             for col, cell in enumerate(values):

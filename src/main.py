@@ -52,7 +52,7 @@ def get_start(grid) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    try:
+    # try:
         main()
-    except Exception as error:
-        print(type(error).__name__ + ":", error)
+    # except Exception as error:
+        # print(type(error).__name__ + ":", error)

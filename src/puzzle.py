@@ -19,9 +19,8 @@ class Puzzle:
         self.size: int = len(grid)
         self.row: int = row
         self.col: int = col
-        self.g: int | None = None
-        self.h: int | None = None
-        self.f: int | None = None
+        self.g: float = 0
+        self.f: float = 0
         self.parent: Puzzle | None = parent
         self.parent_dir: str | None = parent_dir
 
