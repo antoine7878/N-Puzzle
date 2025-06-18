@@ -4,9 +4,9 @@
 The puzzle consists of a board with tiles numbered 1 to N²−1 and one empty space. The objective is to reach the “snail” solution (spiral-ordered layout) by sliding the tiles into the empty space.
 
 ```
-	5 3 1		1 2 3
-	7 8 6	->	8 0 4
-	4 2 0		7 6 5
+5 3 1		1 2 3
+7 8 6	->	8 0 4
+4 2 0		7 6 5
 ```
 
 ```
