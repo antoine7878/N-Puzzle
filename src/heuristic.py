@@ -16,7 +16,9 @@ class Euclide(Heuristic):
             for col, cell in enumerate(values):
                 if cell:
                     row_goal, col_goal = goal_list[cell]
-                    tot += (row_goal - row) ** 2 + (col_goal - col) ** 2
+                    tot += (
+                        (row_goal - row) ** 2 + (col_goal - col) ** 2
+                    ) ** 0.5
         return tot
 
 
@@ -41,4 +43,4 @@ class Misplaced(Heuristic):
         return tot
 
 
-heuristics = [Euclide, Manhattan, Misplaced]
+heuristics = [Manhattan, Euclide, Misplaced]

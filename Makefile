@@ -1,5 +1,5 @@
 test:
-	python ./grids/npuzzle-gen.py 5 -s > ./grids/g && time python ./src/main.py ./grids/g
+	python ./grids/npuzzle-gen.py 3 -s > ./grids/g && time python ./src/main.py ./grids/g
 
 test3:
 	time python ./src/main.py ./grids/solvable-3.txt

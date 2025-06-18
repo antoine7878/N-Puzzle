@@ -10,7 +10,7 @@ def main():
     grid = pars_grid(args.file)
     row, col = get_start(grid)
     puzzle = Puzzle(grid, row, col)
-    solver = Solver(puzzle, heuristic=heuristics[args.d](), quiet=args.q)
+    solver = Solver(puzzle, heuristic=heuristics[args.d](), quiet=args.quiet)
     solver.solve()
 
 
@@ -19,8 +19,16 @@ def pars_args():
         prog="NPuzzle", description="42 NPuzzle A* star solver"
     )
     parser.add_argument("file")
-    parser.add_argument("-d", type=int, default=0, choices=[0, 1, 2])
-    parser.add_argument("-q", action="store_true")
+    parser.add_argument(
+        "-d",
+        type=int,
+        default=0,
+        choices=[0, 1, 2],
+        help="0:Manhattan, 1: Euclidean, 2:Misplaced",
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Only displays the solution"
+    )
     return parser.parse_args()
 
 
@@ -44,7 +52,7 @@ def get_start(grid) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    # try:
-    main()
-# except Exception as error:
-# print(type(error).__name__ + ":", error)
+    try:
+        main()
+    except Exception as error:
+        print(type(error).__name__ + ":", error)
