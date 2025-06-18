@@ -18,7 +18,7 @@ class Euclide(Heuristic):
                     row_goal, col_goal = goal_list[cell]
                     tot += (
                         (row_goal - row) ** 2 + (col_goal - col) ** 2
-                    ) ** 0.5
+                    ) 
         return tot
 
 
