@@ -1,3 +1,4 @@
+WIP
 # N-Puzzle
 
 **N-Puzzle** is a pathfinding and heuristic search project that consists of solving the classic sliding puzzle (3x3, 4x4, NxN) using the **A\*** algorithm.

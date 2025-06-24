@@ -1,24 +1,21 @@
 import sys
 
-from main import pars_args, pars_grid, get_start
+from parsing import pars_args, pars_grid
 from puzzle import Puzzle
 
 
-def main():
+def main() -> int:
     args = pars_args()
     grid = pars_grid(args.file)
-    row, col = get_start(grid)
-    goal = Puzzle.get_goal(len(grid))
+    row, col = Puzzle.get_start(grid)
+    goal, _ = Puzzle.get_goal(len(grid))
     puzzle = Puzzle(grid, row, col)
-    for line in sys.stdin:
-        line = line[:-1]
-        puzzle = Puzzle.execute(puzzle, line)
-    print(puzzle)
+    moves = sys.stdin.read().split()
+    for move in moves:
+        puzzle, _ = Puzzle.execute(puzzle, move)
     print(puzzle == goal)
+    return 0
 
 
 if __name__ == "__main__":
-    # try:
-    main()
-# except Exception as error:
-#     print(type(error).__name__ + ":", error)
+    exit(main())

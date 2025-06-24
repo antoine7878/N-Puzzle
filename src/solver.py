@@ -1,4 +1,5 @@
 import heapq
+import math
 from heuristic import Manhattan, Heuristic
 
 from puzzle import Puzzle
@@ -11,9 +12,10 @@ class Solver:
         heuristic: Heuristic = Manhattan(),
         quiet: bool = False,
     ) -> None:
-        self.size = len(start.grid)
+        self.size = int(math.sqrt(len(start.grid)))
         self.goal, self.goal_list = Puzzle.get_goal(self.size)
         self.open = [start]
+        self.openDict = {start.grid: [start]}
         self.closed = set()
         self.start = start
         self.heuristic: Heuristic = heuristic
@@ -26,24 +28,31 @@ class Solver:
     def solve(self) -> None:
         while self.open:
             current = heapq.heappop(self.open)
+            if len(self.openDict[current.grid]) == 1:
+                del self.openDict[current.grid]
             if current == self.goal:
-                self.print_solution(current)
-                return
-            self.closed.add(current)
+                return self.print_solution(current)
+            self.closed.add(current.grid)
             neighbours = [
                 Puzzle.execute(current, action) for action in Puzzle.actions
             ]
-            for neighbor, _ in neighbours:
-                if not neighbor or neighbor in self.closed:
+            for next in neighbours:
+                if not next or next.grid in self.closed:
                     continue
 
-                neighbor.g = current.g + 1
-                neighbor.f = neighbor.g + self.heuristic(
-                    neighbor, self.goal_list
-                )
-                heapq.heappush(self.open, neighbor)
-                self.tot_open += 1
-                self.max_open = max(self.max_open, len(self.open))
+                next.g = current.g + 1
+                if next.grid not in self.openDict:
+                    self.tot_open += 1
+                    self.max_open = max(self.max_open, len(self.open))
+                    next.f = next.g + self.heuristic(next, self.goal_list)
+                    heapq.heappush(self.open, next)
+                    self.openDict[next.grid] = [next]
+                elif next.g < self.openDict[next.grid][-1].g:
+                    self.tot_open += 1
+                    self.max_open = max(self.max_open, len(self.open))
+                    heapq.heappush(self.open, next)
+                    next.f = next.g + self.heuristic(next, self.goal_list)
+                    self.openDict[next.grid].append(next)
         print("The puzzle in not solvable")
 
     def print_solution(self, node: Puzzle):
